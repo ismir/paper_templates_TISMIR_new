@@ -13,6 +13,11 @@
 *.synctex(busy)
 *.pdf
 *.xdv
+*.ent
+*.maf
+*.mtc
+*.mtc0
+*.toc
 
 # Directories
 .latexmk/

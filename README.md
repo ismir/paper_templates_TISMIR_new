@@ -4,9 +4,9 @@
 
 [![Open in Overleaf](https://img.shields.io/badge/Open%20in-Overleaf-138a07?logo=overleaf&logoColor=white)](https://www.overleaf.com/docs?snip_uri=https://github.com/ismir/paper_templates_TISMIR_old/archive/refs/tags/v1.0.0.zip)
 
-This repository contains the legacy paper template for the Transactions of the International Society for Music Information Retrieval (https://transactions.ismir.net/). Compared to the [new version](https://github.com/ismir/paper_templates_TISMIR_new), this template is more lightweight and includes an additional Microsoft Word option.
+This repository contains the most recent template for the Transactions of the International Society for Music Information Retrieval (https://transactions.ismir.net/). The goal was to have a template which is closer to the published format.
 
-For manuscripts closer to the published format, consider using the new version. Both versions are accepted for publication.
+If you are looking for a more lightweight version, consider using the [old version](https://github.com/ismir/paper_templates_TISMIR_old) (including a Microsoft Word option). Both versions are accepted for publication.
 
 ## Template Overview
 
