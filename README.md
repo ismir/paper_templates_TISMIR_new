@@ -2,7 +2,7 @@
 
 [![LaTeX](https://img.shields.io/badge/LaTeX-Available-blue)](https://www.latex-project.org/)
 
-[![Open in Overleaf](https://img.shields.io/badge/Open%20in-Overleaf-138a07?logo=overleaf&logoColor=white)](https://www.overleaf.com/docs?snip_uri=https://github.com/ismir/paper_templates_TISMIR_old/archive/refs/tags/v1.0.0.zip)
+[![Open in Overleaf](https://img.shields.io/badge/Open%20in-Overleaf-138a07?logo=overleaf&logoColor=white)](https://www.overleaf.com/docs?snip_uri=https://github.com/ismir/paper_templates_TISMIR_new/archive/refs/tags/v1.0.0.zip)
 
 This repository contains the most recent template for the Transactions of the International Society for Music Information Retrieval (https://transactions.ismir.net/). The goal was to have a template which is closer to the published format.
 
