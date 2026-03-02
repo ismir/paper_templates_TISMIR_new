@@ -1,0 +1,33 @@
+%%Generayed by autoinst on 2024/06/14
+%%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{SimSun}
+    [2024/06/14 (autoinst)  Style file for SimSun.]
+    
+\RequirePackage[LY1]{fontenc}
+\IfFileExists{fontaxes.sty}{
+    \RequirePackage{fontaxes}
+}{}
+
+\IfFileExists{xkeyval.sty}{
+    \newcommand*{\SimSun@scale}{1}
+    \RequirePackage{xkeyval}
+    \DeclareOptionX{scaled}{\renewcommand*{\SimSun@scale}{##1}}
+}{
+    \let\DeclareOptionX\DeclareOption
+    \let\ExecuteOptionsX\ExecuteOptions
+    \let\ProcessOptionsX\ProcessOptions
+}
+
+\DeclareOptionX{lining}{\edef\SimSun@figurestyle{LF}}
+\DeclareOptionX{tabular}{\edef\SimSun@figurealign{T}}
+\DeclareOptionX{regular}{\renewcommand*{\mddefault}{m}}
+\ExecuteOptionsX{lining,tabular,regular}
+\ProcessOptionsX\relax
+
+\renewcommand*
+    {\rmdefault}
+    {SimSun-\SimSun@figurealign\SimSun@figurestyle}
+\renewcommand*{\familydefault}{\rmdefault}
+
+\endinput

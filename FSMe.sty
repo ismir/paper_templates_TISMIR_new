@@ -1,0 +1,35 @@
+%%Generayed by autoinst on 2024/06/14
+%%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{FSMe}
+    [2024/06/14 (autoinst)  Style file for FSMe.]
+    
+\RequirePackage[LY1]{fontenc}
+\IfFileExists{fontaxes.sty}{
+    \RequirePackage{fontaxes}
+}{}
+
+\IfFileExists{xkeyval.sty}{
+    \newcommand*{\FSMe@scale}{1}
+    \RequirePackage{xkeyval}
+    \DeclareOptionX{scaled}{\renewcommand*{\FSMe@scale}{##1}}
+}{
+    \let\DeclareOptionX\DeclareOption
+    \let\ExecuteOptionsX\ExecuteOptions
+    \let\ProcessOptionsX\ProcessOptions
+}
+
+\DeclareOptionX{lining}{\edef\FSMe@figurestyle{LF}}
+\DeclareOptionX{tabular}{\edef\FSMe@figurealign{T}}
+\DeclareOptionX{bold}{\renewcommand*{\bfdefault}{b}}
+\DeclareOptionX{light}{\renewcommand*{\mddefault}{l}}
+\DeclareOptionX{regular}{\renewcommand*{\mddefault}{m}}
+\ExecuteOptionsX{lining,tabular,bold,regular}
+\ProcessOptionsX\relax
+
+\renewcommand*
+    {\rmdefault}
+    {FSMe-\FSMe@figurealign\FSMe@figurestyle}
+\renewcommand*{\familydefault}{\rmdefault}
+
+\endinput

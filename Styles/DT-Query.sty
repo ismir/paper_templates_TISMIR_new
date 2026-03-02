@@ -1,0 +1,333 @@
+%% MS -- A L Suresh - Based on the Endnotes package
+
+\@definecounter{querynote}
+\@definecounter{MSquerynotedisplay}
+\def\thequerynote{\@arabic\c@querynote}
+\def\theMSquerynotedisplay{\@arabic\c@MSquerynotedisplay}
+
+%% Check the Query Language, Else redefine in main file
+\def\languagelabel{\fontsize{8bp}{8bp}\selectfont AQ}
+\def\qnotesname{Author Queries:}%
+
+%%\def\@makequerymark{\hbox{{\normalfont \languagelabel\@thequerymark}}}
+\def\@makequerymark{{\languagelabel\@thequerymark\space}}
+\def\makequerymark{\@makequerymark}
+
+\def\thequerymark{\@thequerymark}
+
+\newdimen\querynotesep
+
+%%\newcommand{\fquery}[2][0pt]{\addtocounter{querynote}{1}\addtocounter{MSquerynotedisplay}{1}%
+%%\protect\@mn@querymarginnote{\languagelabel\thequerynote}[#1]%
+%%\protect\addtoquerynotes{\noindent \hbox to 26pt{\languagelabel\thequerynote}#2\par}}
+
+%%\def\fquery#1{%
+%%\addtocounter{querynote}{1}%
+%%\ifthenelse{\isodd{\thepage}}%
+%%    {\setlength\marginparsep{-42pt}\protect\marginnote{\hbox{\languagelabel\thequerynote}}}%
+%%    {\setlength\marginparsep{78pt}\protect\marginnote{\hbox{\languagelabel\thequerynote}}}%
+%%\protect\addtoquerynotes{\noindent \hbox to 26pt{\languagelabel\thequerynote}#1\par}}
+
+%%\newcommand{\fquery}[2][-0pt]{%
+%%\addtocounter{querynote}{1}%
+%%\ifthenelse{\isodd{\thepage}}%
+%%    {\setlength\marginparsep{-42pt}\protect\marginnote{\null\vspace*{-2\baselineskip}\\[#1]{\languagelabel\thequerynote}}}%
+%%    {\setlength\marginparsep{78pt}\protect\marginnote{\hbox{\languagelabel\thequerynote}}}%
+%%\protect\addtoquerynotes{\noindent \hbox to 26pt{\languagelabel\thequerynote}#2\par}}
+
+\def\querynote{\@ifnextchar[\@xquerynote{\stepcounter{querynote}\addtocounter{MSquerynotedisplay}{1}%
+     \protected@xdef\@thequerymark{\thequerynote}%
+     \@querynotemark\@querynotetext}}
+
+\def\@xquerynote[#1]{%
+   \begingroup
+     \c@querynote=#1\relax
+     \unrestored@protected@xdef\@thequerymark{\thequerynote}%
+   \endgroup
+   \@querynotemark\@querynotetext}
+
+%  Here begins a section of querynote code that's really different from
+% the footnote code of LaTeX.
+
+\let\@doanqnote=0
+\let\@endanqnote=0
+
+\newwrite\@qnotes
+\newif\if@qnotesopen \global\@qnotesopenfalse
+
+\def\@openqnotes{\immediate\openout\@qnotes=\jobname.qry\relax
+      \global\@qnotesopentrue}
+
+%  The stuff with \next and \meaning is a trick from the TeXbook, 382,
+% there intended for setting verbatim text, but here used to avoid
+% macro expansion when the footnote text is written.  \next will have
+% the entire text of the footnote as one long line, which might well
+% overflow limits on output line length; the business with \newlinechar
+% makes every space become a newline in the \@qnotes file, so that all
+% of the lines wind up being quite short.
+
+\long\def\@querynotetext#1{%
+     \if@qnotesopen \else \@openqnotes \fi
+     \immediate\write\@qnotes{\@doanqnote{\@thequerymark}}%
+     \begingroup
+        \def\next{#1}%
+        \newlinechar='40
+        \immediate\write\@qnotes{\meaning\next}%
+     \endgroup
+     \immediate\write\@qnotes{\@endanqnote}}
+
+% \addtoquerynotes works the way the other querynote macros probably should
+% have, requiring the use of \protect for fragile commands.
+
+\long\def\addtoquerynotes#1{%
+     \if@qnotesopen \else \@openqnotes \fi
+     \begingroup
+        \newlinechar='40
+        \let\protect\string
+        \immediate\write\@qnotes{#1}%
+     \endgroup}
+
+%  End of unique querynote code
+
+\def\querynotemark{%
+   \@ifnextchar[\@xquerynotemark
+     {\stepcounter{querynote}\addtocounter{MSquerynotedisplay}{1}%
+      \protected@xdef\@thequerymark{\thequerynote}%
+      \@querynotemark}}
+
+\def\@xquerynotemark[#1]{%
+   \begingroup
+      \c@querynote #1\relax
+      \unrestored@protected@xdef\@thequerymark{\thequerynote}%
+   \endgroup
+   \@querynotemark}
+
+%\def\@querynotemark{%
+%  \leavevmode
+%  \ifhmode\edef\@x@sf{\the\spacefactor}\nobreak\fi
+%  \makequerymark
+%  \ifhmode\spacefactor\@x@sf\fi
+%  \relax}
+\def\@querynotemark{%
+  \leavevmode
+  \ifhmode\edef\@x@sf{\the\spacefactor}\nobreak\fi
+  \marginpar{\makequerymark}%
+  \ifhmode\spacefactor\@x@sf\fi
+  \relax}
+
+%%\def\@makequerymark{\hbox{{\normalfont \languagelabel\@thequerymark}}}
+%%\def\@querynotemark{%
+%%  \leavevmode
+%%  \ifhmode\edef\@x@sf{\the\spacefactor}\nobreak\fi
+%%  \marginpar{\makequerymark}
+%%  \ifhmode\spacefactor\@x@sf\fi
+%%  \relax}
+
+\def\querynotetext{%
+     \@ifnextchar [\@xquerynotenext
+       {\protected@xdef\@thequerymark{\thequerynote}%
+    \@querynotetext}}
+
+\def\@xquerynotenext[#1]{\begingroup \c@querynote=#1\relax
+   \xdef\@thequerymark{\thequerynote}\endgroup \@querynotetext}
+
+\def\@xquerynotenext[#1]{%
+  \begingroup
+     \c@querynote=#1\relax
+     \unrestored@protected@xdef\@thequerymark{\thequerynote}%
+  \endgroup
+  \@querynotetext}
+
+
+%  \thequerynotes actually prints out the querynotes.
+
+%  The user may want separate querynotes for each chapter, or a big
+% block of them at the end of the whole document.  As it stands,
+% either will work; you just say \thequerynotes wherever you want the
+% querynotes so far to be inserted.  However, you must add
+% \setcounter{querynote}{0} after that if you want subsequent querynotes
+% to start numbering at 1 again.
+
+%  \qnoteformat is provided so user can specify some special formatting
+% for the querynotes.  It needs to set up the paragraph parameters, start
+% the paragraph, and print the label.  The \mbox stuff in \qnoteheading
+% is to make and undo a dummy paragraph, to get around the games \section*
+% plays with paragraph indenting and instead give us uniform
+% indenting for all notes.
+
+\def\qnoteheading{\section*{\qnotesname
+  \@mkboth{\MakeUppercase{\qnotesname}}{\MakeUppercase{\qnotesname}}}%
+  \mbox{}\par\vskip-\baselineskip}
+
+\def\hangfrom#1{\setbox\@tempboxa=\hbox{#1}%
+  \addtolength{\hangindent}{\wd\@tempboxa}%
+  \hangafter=1\unhbox\@tempboxa}
+
+\def\qnoteformat{\rightskip\z@ \leftskip\z@ \parindent=0em
+  \leavevmode\hangfrom{\hbox to 26pt{\makequerymark}}}
+
+\def\qnotesize{\normalsize}
+
+\def\thequerynotes{\immediate\closeout\@qnotes \global\@qnotesopenfalse
+  \begingroup
+  \onecolumn\clearpage
+  \pagestyle{empty}
+  \thispagestyle{empty}
+    \makeatletter
+    %
+    % The machinery with \@ResetGT and > here ensures that
+    % \@doanqnote works properly even if > is an active character
+    % at the point where \thequerynotes is invoked. > needs to have
+    % catcode 12 when the arguments of \@doanqnote are scanned, so
+    % that the > in the string "macro:->" is matched.  The actual
+    % footnote text is not an argument to \@doanqnote, but just
+    % follows it in the .qry file; so \@ResetGT can reset the
+    % category code for > that should be used when processing
+    % that text.  That resetting takes place within a
+    % \begingroup-\endgroup block set up by \@doanqnote and
+    % \@endanqnote, so the catcode for > is back to 12 for the
+    % next note.
+    %
+    \edef\@tempa{`\string >}%
+    \ifnum\catcode\@tempa=12%
+      \let\@ResetGT\relax
+    \else
+      \edef\@ResetGT{\noexpand\catcode\@tempa=\the\catcode\@tempa}%
+      \@makeother\>%
+    \fi
+    \def\@doanqnote##1##2>{\def\@thequerymark{##1}\par\begingroup
+        \@ResetGT
+        \edef\@currentlabel{\csname p@querynote\endcsname\@thequerymark}%
+        \qnoteformat}
+    \def\@endanqnote{\par\endgroup}%
+    \qnoteheading
+    \qnotesize
+  \pagestyle{empty}
+  \thispagestyle{empty}
+    \input{\jobname.qry}%
+  \pagestyle{empty}
+  \thispagestyle{empty}
+  \endgroup}
+
+\let\query\querynote
+\def\@queryspace{0pt}
+\def\queryspace#1{\gdef\@queryspace{#1}}
+
+
+%% A L Suresh
+% For fixing in floats
+%%   \renewcommand*{\fquery}[1][0pt]{\def\queryadjustspace{#1}%
+%%           \@dblarg\@mn@querymarginnote
+%%   }
+
+   \renewcommand*{\query}[1][0pt]{\def\queryadjustspace{#1}%
+           \@dblarg\@mn@querymarginnote
+   }
+   \newcommand{\@mn@querymarginnote}[2][]{%
+\ifodd\value{page}%
+    \if@firstcolumn\makebox[0pt]{}\reversemarginpar\else\makebox[0pt]{}\normalmarginpar\fi%
+\else%
+    \if@firstcolumn\makebox[0pt]{}\normalmarginpar\else\makebox[0pt]{}\normalmarginpar\fi%
+\fi%
+           \ifhmode
+           \@bsphack
+           \begingroup
+           \ifdim\@savsk>\z@\else
+       \def\:{\@xifnch}\expandafter\def\: { \futurelet\@let@token\@ifnch}%
+               \fi
+               \else
+       \begingroup
+               \fi
+                \addtocounter{querynote}{1}\addtocounter{MSquerynotedisplay}{1}%
+              %\@ifnextchar [{\@mn@@querymarginnote[{#1}]{#2}}{\@mn@@querymarginnote[{#1}]{#2}[\z@]}%
+               \@ifnextchar [%
+               {\@mn@@querymarginnote[{#1}]{#2}}%
+               {\@mn@@querymarginnote[{%
+                                        \ifodd\value{page}%
+                                            \if@firstcolumn%
+                                                    \makebox[0pt]{}\reversemarginpar\hspace*{\@queryspace}{\normalfont\textcolor{black}{\languagelabel\thequerynote}}%
+                                                \else%
+                                                    \makebox[0pt]{}\normalmarginpar\hspace*{\@queryspace}{\normalfont\textcolor{black}{\languagelabel\thequerynote}}%
+                                                \fi%
+                                        \else%
+                                            \if@firstcolumn%
+                                                \makebox[0pt]{}\normalmarginpar\hspace*{\@queryspace}{\normalfont\textcolor{black}{\languagelabel\thequerynote}}%
+                                            \else
+                                                \makebox[0pt]{}\normalmarginpar\hspace*{\@queryspace}\hspace*{307pt}{\normalfont\textcolor{black}{\languagelabel\thequerynote}}%
+                                            \fi%
+                                        \fi\gdef\@queryspace{0pt}%
+                                        \protect\addtoquerynotes{\noindent %\hangfrom
+                                                \hangindent45pt\hangafter=1{\hbox to 45pt{\bfseries\languagelabel\thequerynote:}#1\endgraf}}}]%
+                                      {{\normalfont\textcolor{black}{\languagelabel\thequerynote}}%
+                                        \protect\addtoquerynotes{\noindent %\hangfrom
+                                                \hangindent45pt\hangafter=1{\hbox to 45pt{\bfseries\languagelabel\thequerynote:}}#2\endgraf}}[\queryadjustspace]}%  %% #1-Even #2-ODD
+   }
+   \newcommand{\@mn@@querymarginnote}{}
+   \def\@mn@@querymarginnote[#1]#2[#3]{%
+           \endgroup
+           \ifhmode
+           \@mn@@@querymarginnote[{#1}]{#2}[{#3}]%
+           \@esphack
+           \else
+       \@mn@@@querymarginnote[{#1}]{#2}[{#3}]%
+               \fi
+   }
+   \newcommand{\@mn@@@querymarginnote}{}
+   \def\@mn@@@querymarginnote[#1]#2[#3]{%
+           \begingroup
+           \ifmmode\strut\let\@tempa\vadjust\else
+       \if@inlabel\leavevmode\fi
+               \ifhmode\strut\let\@tempa\vadjust\else\let\@tempa\mn@vlap\fi
+               \fi
+               \@tempa{%
+               \vbox to\z@{%
+               \vss
+               \@mn@margintest
+               \if@reversemargin\if@tempswa
+               \@tempswafalse
+               \else
+       \@tempswatrue
+               \fi\fi
+               \if@tempswa
+               \rlap{\kern\hsize\kern\marginparsep\kern\querymarginnoterightadjust
+               \vbox to\z@{\kern #3
+               \vbox to\z@{%
+               \hsize\marginparwidth
+               \kern-\baselineskip\kern-\parskip
+               \marginfont\raggedrightquerymarginnote\hspace{\z@}\strut#2\endgraf
+               \vss}%
+               \vss}%
+       }%
+               \else
+       \llap{%
+               \vbox to\z@{\kern #3
+               \vbox to\z@{%
+               \hsize\marginparwidth
+               \kern-\baselineskip\kern-\parskip
+               \marginfont\raggedleftquerymarginnote\hspace{\z@}\strut#1\endgraf
+               \vss}%
+               \vss}%
+               \kern\marginparsep\kern\querymarginnoteleftadjust
+       }%
+               \fi
+       }%
+       }%
+               \endgroup
+   }
+   \newcommand*{\querymarginnoterightadjust}{}
+   \newcommand*{\querymarginnoteleftadjust}{}
+   \let\querymarginnoterightadjust\z@
+   \let\querymarginnoteleftadjust\z@
+
+   \newcommand*{\raggedleftquerymarginnote}{\raggedleft}
+   \newcommand*{\raggedrightquerymarginnote}{\raggedright}
+
+\definecolor{10black}{cmyk}{0,0,0,0.10}
+\sethlcolor{10black}
+\def\querytext#1{{\protect\texthl{#1}}}%
+
+\endinput
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Version to fix for 2 columns -- 5 Nov 2018
+   % -- "\queryspace" with horizontal space ajustment   \queryspace{10pt}\query{...}
+   % -- "Value -10pt" with vertical space ajustment     \query[-10pt]{...}

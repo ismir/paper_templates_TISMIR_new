@@ -1,0 +1,31 @@
+# LaTeX
+*.aux
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk
+*.dpth
+*.md5
+*.auxlock
+*.out
+*.log
+*.synctex.gz
+*.synctex(busy)
+*.pdf
+*.xdv
+
+# Directories
+.latexmk/
+# macOS
+.DS_Store
+*.swp
+*.swo
+*~
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+Desktop.ini
+*.lnk
+$RECYCLE.BIN/
