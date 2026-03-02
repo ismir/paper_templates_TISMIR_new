@@ -24,6 +24,7 @@ We welcome contributions! Please feel free to:
 
 ## Known Issues
 
+- The footer at the end of the document may disappear depending on the number of pages. Usually when the current document has an even number of pages.
 
 ## License
 
