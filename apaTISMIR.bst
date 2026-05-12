@@ -90,6 +90,7 @@ ENTRY
     year
     doi
     url
+    urldate
   }
   {}
   { label extra.label sort.label }
@@ -514,9 +515,18 @@ FUNCTION {format.doi}
 }
 
 FUNCTION {format.url}
-{ url empty$
+{ doi empty$
+    { url empty$
+        { "" }
+        { "URL: \url{" url * "}" *
+          urldate empty$
+            'skip$
+            { " [Accessed: " * urldate * "]" * }
+          if$
+        }
+      if$
+    }
     { "" }
-    { url * }
   if$
 }
 
@@ -539,6 +549,7 @@ FUNCTION {article}
   if$
   new.block
   format.doi output
+  format.url output
   note output
   fin.entry
 }
@@ -574,6 +585,7 @@ FUNCTION {book}
   format.edition output
   new.block
   format.doi output
+  format.url output
   note output
   fin.entry
 }
@@ -590,6 +602,7 @@ FUNCTION {booklet}
   address output
   new.block
   format.doi output
+  format.url output
   note output
   fin.entry
 }
@@ -627,6 +640,7 @@ FUNCTION {inbook}
   format.edition output
   new.block
   format.doi output
+  format.url output
   note output
   fin.entry
 }
@@ -655,6 +669,7 @@ FUNCTION {incollection}
   if$
   new.block
   format.doi output
+  format.url output
   note output
   fin.entry
 }
@@ -683,6 +698,7 @@ FUNCTION {inproceedings}
   if$
   new.block
   format.doi output
+  format.url output
   note output
   fin.entry
 }
@@ -702,6 +718,7 @@ FUNCTION {manual}
   format.edition output
   new.block
   format.doi output
+  format.url output
   note output
   fin.entry
 }
@@ -749,6 +766,7 @@ FUNCTION {phdthesis}
   address output
   new.block
   format.doi output
+  format.url output
   note output
   fin.entry
 }
@@ -768,6 +786,7 @@ FUNCTION {proceedings}
   publisher output				% here
   new.block
   format.doi output
+  format.url output
   note output
   fin.entry
 }
@@ -785,6 +804,7 @@ FUNCTION {techreport}
   address output
   new.block
   format.doi output
+  format.url output
   new.block
   format.url output
   note output
@@ -800,6 +820,7 @@ FUNCTION {unpublished}
   format.title "title" output.check
   new.block
   format.doi output
+  format.url output
   note "note" output.check
   fin.entry
 }
