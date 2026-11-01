@@ -1,5 +1,8 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 
+%% [warning fix] scalable Computer Modern sizes (math operators use OT1/cmr at bp sizes)
+\RequirePackage{fix-cm}
+
 %% Document if conditions
 \newif\if@cropmarkson \@cropmarksonfalse
 \newif\if@hyperrefon  \@hyperrefonfalse
