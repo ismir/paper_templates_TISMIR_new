@@ -1824,6 +1824,8 @@
 %% [warning fix] set font defaults before fontenc selects a font (avoids LY1/cmr substitution)
 \renewcommand\rmdefault{FSMe-TLF}
 \renewcommand\sfdefault{FSMe-TLF}
+%% [warning fix] typewriter font with LY1 + light series (was falling back to Times)
+\renewcommand\ttdefault{lmtt}
 \renewcommand\seriesdefault{l}
 \renewcommand\mddefault{m}
 \renewcommand\bfdefault{b}
