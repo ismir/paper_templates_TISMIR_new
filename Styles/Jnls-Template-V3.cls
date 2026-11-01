@@ -2624,7 +2624,7 @@ colback=BlueTextColor,colbacktitle=BlueTextColor,left skip=-16pt,left=-2pt,colfr
 \par\addvspace{126pt}%
 \ifx\@sptitle\empty\vspace*{20pt}\else\@sptitle\fi\par\addvspace{16pt}
 \ifx\@articletype\empty\else\@articletype\fi\par\addvspace{45pt}
-\publisherlogo\par\addvspace{13pt}
+\makebox[\linewidth][l]{\publisherlogo}\par\addvspace{13pt}% [warning fix] 120pt logo in 115pt column
 %\societylogo\par
 \vfill\vbox to 458pt{\vspace*{13.35pt}
 \ifx\@doiline\empty\else\@doiline\fi\par\addvspace{11pt}
