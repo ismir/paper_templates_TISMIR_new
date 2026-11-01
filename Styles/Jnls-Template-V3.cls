@@ -1,5 +1,10 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 
+%% [warning fix] scalable Computer Modern sizes (math operators use OT1/cmr at bp sizes)
+\RequirePackage{fix-cm}
+%% [warning fix] the bundled logos are PDF 1.6/1.7; allow including them without warnings
+\ifdefined\pdfminorversion\pdfminorversion=7\fi
+
 %% Document if conditions
 \newif\if@cropmarkson \@cropmarksonfalse
 \newif\if@hyperrefon  \@hyperrefonfalse
@@ -89,7 +94,8 @@
 %% General Packages Use and required packages to add here
 %\RequirePackage{amsmath,amssymb,amsfonts,}
 %\RequirePackage{amsmath}
-\RequirePackage{./Styles/amsthm}
+%% [warning fix] the bundled ./Styles/amsthm.sty was an outdated copy of the stock package
+\RequirePackage{amsthm}
 %\RequirePackage{Mypagegrid}
 \RequirePackage{xcolor,soul,url}
 \RequirePackage{graphicx,}
@@ -109,7 +115,8 @@
  \newcolumntype{(}[1]{D{(}{(}{#1}} %% Char alignment before and after "(" alignment
  \newcolumntype{)}[1]{D{)}{)}{#1}} %% Char alignment before and after ")" alignment
  \newcolumntype{z}[1]{D{0}{0}{#1}} %% Char alignment before and after "0" alignment
- \newcolumntype{m}[1]{D{-}{-}{#1}} %% Char alignment before and after "minus" alignment
+ %% [warning fix] disabled: redefined array's primitive m{<width>} column
+ %\newcolumntype{m}[1]{D{-}{-}{#1}} %% Char alignment before and after "minus" alignment
  \newcolumntype{a}[1]{D{+}{+}{#1}} %% Char alignment before and after "plus" alignment
  \newcolumntype{t}[1]{D{\times}{\times}{#1}} %% Char alignment before and after "times" alignment
 
@@ -123,17 +130,25 @@
 
 \RequirePackage{endnotes}
 \RequirePackage{lettrine}
+%% [warning fix] recent lettrine versions try to \input an empty options file ("File  loaded!")
+\expandafter\ifx\expandafter\relax\detokenize\expandafter{\DefaultOptionsFile}\relax
+  \let\DefaultOptionsFile\@empty
+\fi
 
 \RequirePackage{wrapfig}%
 
 %% Hyperlinks update
+%% [warning fix] draft/bookmarks can only be set at load time
+\if@hyperrefon\PassOptionsToPackage{draft,bookmarks=false}{hyperref}\fi
 \usepackage{hyperref}%\endinput
+%% [warning fix] bookmark levels for the class's custom toc entries
+\providecommand*\toclevel@toctitle{0}
+\providecommand*\toclevel@tocauthor{1}
 
 %\RequirePackage{breakurl}
 \if@hyperrefon
-    \hypersetup{draft,
+    \hypersetup{%
             linkcolor=black,
-            bookmarks=false,%
             bookmarksopen=false,%
     }%
 \else%
@@ -1811,12 +1826,15 @@
 
 
 
-\usepackage[LY1]{fontenc}
+%% [warning fix] set font defaults before fontenc selects a font (avoids LY1/cmr substitution)
 \renewcommand\rmdefault{FSMe-TLF}
 \renewcommand\sfdefault{FSMe-TLF}
+%% [warning fix] typewriter font with LY1 + light series (was falling back to Times)
+\renewcommand\ttdefault{lmtt}
 \renewcommand\seriesdefault{l}
 \renewcommand\mddefault{m}
 \renewcommand\bfdefault{b}
+\usepackage[LY1]{fontenc}
 
 \AtBeginDocument{
 \pdfmapfile{+FSMe.map}
@@ -1965,12 +1983,12 @@
 
 %%% Font Def
 \def\subtitlefont{\fontfamily{\sfdefault}\fontsize{12bp}{14bp}\selectfont}
-\def\titlefont{\def\textit##1{{\fontfamily{FSMe-TLF}\fontseries{m}\fontshape{it}\selectfont##1}}\color{white}\fontencoding{LY1}\fontfamily{FSMe-TLF}\fontseries{md}\fontsize{23bp}{28bp}\selectfont\raggedright}
+\def\titlefont{\def\textit##1{{\fontfamily{FSMe-TLF}\fontseries{m}\fontshape{it}\selectfont##1}}\color{white}\fontencoding{LY1}\fontfamily{FSMe-TLF}\fontseries{m}\fontsize{23bp}{28bp}\selectfont\raggedright}
 \def\aueditorfont{\fontfamily{\sfdefault}\fontsize{8bp}{10bp}\selectfont}
 \def\authorfont{\color{BlueTextColor}\bfseries\fontsize{10bp}{12bp}\selectfont}
 \def\afflnotefont{\color{BlueTextColor}\normalfont\fontfamily{\rmdefault}\fontsize{8bp}{10bp}\selectfont}
 \def\sptitlefont{\fontfamily{FSMe-TLF}\bfseries\fontsize{10bp}{16bp}\selectfont}
-\def\arttypefont{\def\textit##1{{\fontfamily{FSMe-TLF}\fontseries{m}\fontshape{it}\selectfont##1}}\color{BlueTextColor}\fontfamily{FSMe-TLF}\fontseries{md}\fontsize{10bp}{16bp}\selectfont}
+\def\arttypefont{\def\textit##1{{\fontfamily{FSMe-TLF}\fontseries{m}\fontshape{it}\selectfont##1}}\color{BlueTextColor}\fontfamily{FSMe-TLF}\fontseries{m}\fontsize{10bp}{16bp}\selectfont}
 \def\affiliationfont{\fontsize{8bp}{10bp}\selectfont}
 \def\fundingfont{\normalfont\fontsize{9bp}{11bp}\selectfont}
 \def\titleurlfont{\normalfont\fontsize{9bp}{11bp}\selectfont}
@@ -2509,7 +2527,7 @@ colback=BlueTextColor,colbacktitle=BlueTextColor,left skip=-16pt,left=-2pt,colfr
 %% Article Header Definition
 \renewcommand{\@maketitle}
 {\ifx\@title\empty\else%
-        {\vspace*{-83.6pt}\titlebox{\@title} \par\vspace*{-19pt}}
+        {\hfuzz=12pt\vspace*{-83.6pt}\titlebox{\@title} \par\vspace*{-19pt}}% [warning fix] box bleeds by design
         \protect\phantomsection\addcontentsline{toc}{toctitle}{\@title}% for bookmarks
     \fi%
     %% Aritle Authors, Address and Correspondings
@@ -2530,8 +2548,8 @@ colback=BlueTextColor,colbacktitle=BlueTextColor,left skip=-16pt,left=-2pt,colfr
 \def\theequation{\arabic{equation}}
 \setcounter{footnote}{0}%
 %\setcounter{endnote}{0}%
-\@definecounter{querynote}
-\@definecounter{MSquerynotedisplay}
+\@ifundefined{c@querynote}{\@definecounter{querynote}}{}% [warning fix]
+\@ifundefined{c@MSquerynotedisplay}{\@definecounter{MSquerynotedisplay}}{}%
 \setcounter{querynote}{0}%
 \setcounter{MSquerynotedisplay}{0}%
 %%
@@ -2545,7 +2563,12 @@ colback=BlueTextColor,colbacktitle=BlueTextColor,left skip=-16pt,left=-2pt,colfr
       \newpage%
       \global\@topnum\z@% Prevents figures from going at top of page.
       %\thispagestyle{empty}
-     \twocolumn[\begin{minipage}{350pt}\vbox to 355pt{{\@maketitle}%
+     %% [warning fix] The cover page used to be \twocolumn[...] with content deliberately taller
+     %% than \textheight ("Optional argument of \twocolumn too tall", "Text page 1 contains only
+     %% floats", 2x "Overfull \vbox"). Same box, same position, but set in a page-high \vbox whose
+     %% \vss absorbs the overhang; \hfuzz tolerates the intended bleeds (title box, logos).
+     \vbox to\textheight{\hsize\textwidth\@parboxrestore\col@number\@ne\normalcolor\hfuzz=25pt\relax
+     \begin{minipage}{350pt}\vbox to 355pt{{\@maketitle}%
 \par\addvspace{30.5pt}
   \noindent{\aueditorfont\@aueditor}%%
 \removelastskip
@@ -2601,7 +2624,7 @@ colback=BlueTextColor,colbacktitle=BlueTextColor,left skip=-16pt,left=-2pt,colfr
 \par\addvspace{126pt}%
 \ifx\@sptitle\empty\vspace*{20pt}\else\@sptitle\fi\par\addvspace{16pt}
 \ifx\@articletype\empty\else\@articletype\fi\par\addvspace{45pt}
-\publisherlogo\par\addvspace{13pt}
+\makebox[\linewidth][l]{\publisherlogo}\par\addvspace{13pt}% [warning fix] 120pt logo in 115pt column
 %\societylogo\par
 \vfill\vbox to 458pt{\vspace*{13.35pt}
 \ifx\@doiline\empty\else\@doiline\fi\par\addvspace{11pt}
@@ -2610,7 +2633,7 @@ colback=BlueTextColor,colbacktitle=BlueTextColor,left skip=-16pt,left=-2pt,colfr
 \par\addvspace{7.5pt}
 \printkeywords\par\addvspace{9.5pt}
 \printartdetails\vfill
-\vspace*{32.4pt}}}\end{minipage}]\endgroup%
+\vspace*{32.4pt}}}\end{minipage}\par\vss}\endgroup\twocolumn%
   \setcounter{footnote}{0}%
   \global\let\thanks\relax%
   \global\let\@date\@empty%
@@ -2668,8 +2691,8 @@ colback=BlueTextColor,colbacktitle=BlueTextColor,left skip=-16pt,left=-2pt,colfr
 \def\theequation{\arabic{equation}}
 \setcounter{footnote}{0}%
 %\setcounter{endnote}{0}%
-\@definecounter{querynote}
-\@definecounter{MSquerynotedisplay}
+\@ifundefined{c@querynote}{\@definecounter{querynote}}{}% [warning fix]
+\@ifundefined{c@MSquerynotedisplay}{\@definecounter{MSquerynotedisplay}}{}%
 \setcounter{querynote}{0}%
 \setcounter{MSquerynotedisplay}{0}%
 %%
@@ -2933,8 +2956,8 @@ colback=BlueTextColor,colbacktitle=BlueTextColor,left skip=-16pt,left=-2pt,colfr
 \def\keysectionfont{\raggedright\fontfamily{\rmdefault}\fontsize{10bp}{12bp}\selectfont\bfseries}
 \def\sectionfont{\mathversion{bold}\fontfamily{\rmdefault}\fontsize{12bp}{15bp}\color{BlueTextColor}\selectfont\bfseries}
 \def\subsectionfont{\mathversion{bold}\fontfamily{\rmdefault}\fontsize{10bp}{13bp}\selectfont\bfseries}
-\def\subsubsectionfont{\def\textit##1{{\fontfamily{FSMe-TLF}\fontseries{m}\fontshape{it}\selectfont##1}}\fontfamily{FSMe-TLF}\fontseries{md}\fontsize{10bp}{13bp}\selectfont}
-\def\paragraphfont{\def\textit##1{{\fontfamily{FSMe-TLF}\fontseries{m}\fontshape{it}\selectfont##1}}\fontfamily{FSMe-TLF}\fontseries{md}\itshape\fontsize{9bp}{12bp}\selectfont}
+\def\subsubsectionfont{\def\textit##1{{\fontfamily{FSMe-TLF}\fontseries{m}\fontshape{it}\selectfont##1}}\fontfamily{FSMe-TLF}\fontseries{m}\fontsize{10bp}{13bp}\selectfont}
+\def\paragraphfont{\def\textit##1{{\fontfamily{FSMe-TLF}\fontseries{m}\fontshape{it}\selectfont##1}}\fontfamily{FSMe-TLF}\fontseries{m}\itshape\fontsize{9bp}{12bp}\selectfont}
 \def\subparagraphfont{\mathversion{bold}\fontsize{9bp}{11bp}\selectfont\bfseries\itshape}
 
 \renewcommand\section{\needspace{0.15in}\@startsection {section}{1}{0\p@}%
@@ -3590,7 +3613,7 @@ font={\fontsize{8bp}{10bp}\selectfont},before={\fontsize{8bp}{10bp}\selectfont}
 
 \newenvironment{sketch}[1][]{\begingroup\addvspace{6.5pt}\noindent\fontsize{10bp}{12bp}\selectfont{\bfseries#1}\space}{\hfill$\square$\endgroup\par\addvspace{6.5pt}}
 
-\theoremstyle{theorem}
+\theoremstyle{plain}% [warning fix] amsthm has no style "theorem"
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{THM}{Theorem}[section]
 \newtheorem{lem}[theorem]{Lemma}
@@ -4372,9 +4395,8 @@ itemsep=0pt,itemindent=0pt,topsep=0bp,parsep=0pt,partopsep=0pt,rightmargin=0pt,l
 
 
 \AtBeginDocument{\if@hyperrefon
-    \hypersetup{draft,
+    \hypersetup{%
             linkcolor=black,
-            bookmarks=false,%
             bookmarksopen=false,%
     }%
 \else%
