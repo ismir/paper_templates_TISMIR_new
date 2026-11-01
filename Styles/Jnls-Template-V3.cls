@@ -3603,7 +3603,7 @@ font={\fontsize{8bp}{10bp}\selectfont},before={\fontsize{8bp}{10bp}\selectfont}
 
 \newenvironment{sketch}[1][]{\begingroup\addvspace{6.5pt}\noindent\fontsize{10bp}{12bp}\selectfont{\bfseries#1}\space}{\hfill$\square$\endgroup\par\addvspace{6.5pt}}
 
-\theoremstyle{theorem}
+\theoremstyle{plain}% [warning fix] amsthm has no style "theorem"
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{THM}{Theorem}[section]
 \newtheorem{lem}[theorem]{Lemma}
