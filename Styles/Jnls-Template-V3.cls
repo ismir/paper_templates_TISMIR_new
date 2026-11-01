@@ -2527,7 +2527,7 @@ colback=BlueTextColor,colbacktitle=BlueTextColor,left skip=-16pt,left=-2pt,colfr
 %% Article Header Definition
 \renewcommand{\@maketitle}
 {\ifx\@title\empty\else%
-        {\vspace*{-83.6pt}\titlebox{\@title} \par\vspace*{-19pt}}
+        {\hfuzz=12pt\vspace*{-83.6pt}\titlebox{\@title} \par\vspace*{-19pt}}% [warning fix] box bleeds by design
         \protect\phantomsection\addcontentsline{toc}{toctitle}{\@title}% for bookmarks
     \fi%
     %% Aritle Authors, Address and Correspondings
