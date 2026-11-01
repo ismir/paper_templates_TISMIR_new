@@ -89,7 +89,8 @@
 %% General Packages Use and required packages to add here
 %\RequirePackage{amsmath,amssymb,amsfonts,}
 %\RequirePackage{amsmath}
-\RequirePackage{./Styles/amsthm}
+%% [warning fix] the bundled ./Styles/amsthm.sty was an outdated copy of the stock package
+\RequirePackage{amsthm}
 %\RequirePackage{Mypagegrid}
 \RequirePackage{xcolor,soul,url}
 \RequirePackage{graphicx,}
