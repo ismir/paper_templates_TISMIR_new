@@ -136,6 +136,9 @@
 %% [warning fix] draft/bookmarks can only be set at load time
 \if@hyperrefon\PassOptionsToPackage{draft,bookmarks=false}{hyperref}\fi
 \usepackage{hyperref}%\endinput
+%% [warning fix] bookmark levels for the class's custom toc entries
+\providecommand*\toclevel@toctitle{0}
+\providecommand*\toclevel@tocauthor{1}
 
 %\RequirePackage{breakurl}
 \if@hyperrefon
