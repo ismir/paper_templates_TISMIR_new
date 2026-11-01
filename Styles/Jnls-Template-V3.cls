@@ -110,7 +110,8 @@
  \newcolumntype{(}[1]{D{(}{(}{#1}} %% Char alignment before and after "(" alignment
  \newcolumntype{)}[1]{D{)}{)}{#1}} %% Char alignment before and after ")" alignment
  \newcolumntype{z}[1]{D{0}{0}{#1}} %% Char alignment before and after "0" alignment
- \newcolumntype{m}[1]{D{-}{-}{#1}} %% Char alignment before and after "minus" alignment
+ %% [warning fix] disabled: redefined array's primitive m{<width>} column
+ %\newcolumntype{m}[1]{D{-}{-}{#1}} %% Char alignment before and after "minus" alignment
  \newcolumntype{a}[1]{D{+}{+}{#1}} %% Char alignment before and after "plus" alignment
  \newcolumntype{t}[1]{D{\times}{\times}{#1}} %% Char alignment before and after "times" alignment
 
