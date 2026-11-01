@@ -1978,12 +1978,12 @@
 
 %%% Font Def
 \def\subtitlefont{\fontfamily{\sfdefault}\fontsize{12bp}{14bp}\selectfont}
-\def\titlefont{\def\textit##1{{\fontfamily{FSMe-TLF}\fontseries{m}\fontshape{it}\selectfont##1}}\color{white}\fontencoding{LY1}\fontfamily{FSMe-TLF}\fontseries{md}\fontsize{23bp}{28bp}\selectfont\raggedright}
+\def\titlefont{\def\textit##1{{\fontfamily{FSMe-TLF}\fontseries{m}\fontshape{it}\selectfont##1}}\color{white}\fontencoding{LY1}\fontfamily{FSMe-TLF}\fontseries{m}\fontsize{23bp}{28bp}\selectfont\raggedright}
 \def\aueditorfont{\fontfamily{\sfdefault}\fontsize{8bp}{10bp}\selectfont}
 \def\authorfont{\color{BlueTextColor}\bfseries\fontsize{10bp}{12bp}\selectfont}
 \def\afflnotefont{\color{BlueTextColor}\normalfont\fontfamily{\rmdefault}\fontsize{8bp}{10bp}\selectfont}
 \def\sptitlefont{\fontfamily{FSMe-TLF}\bfseries\fontsize{10bp}{16bp}\selectfont}
-\def\arttypefont{\def\textit##1{{\fontfamily{FSMe-TLF}\fontseries{m}\fontshape{it}\selectfont##1}}\color{BlueTextColor}\fontfamily{FSMe-TLF}\fontseries{md}\fontsize{10bp}{16bp}\selectfont}
+\def\arttypefont{\def\textit##1{{\fontfamily{FSMe-TLF}\fontseries{m}\fontshape{it}\selectfont##1}}\color{BlueTextColor}\fontfamily{FSMe-TLF}\fontseries{m}\fontsize{10bp}{16bp}\selectfont}
 \def\affiliationfont{\fontsize{8bp}{10bp}\selectfont}
 \def\fundingfont{\normalfont\fontsize{9bp}{11bp}\selectfont}
 \def\titleurlfont{\normalfont\fontsize{9bp}{11bp}\selectfont}
@@ -2946,8 +2946,8 @@ colback=BlueTextColor,colbacktitle=BlueTextColor,left skip=-16pt,left=-2pt,colfr
 \def\keysectionfont{\raggedright\fontfamily{\rmdefault}\fontsize{10bp}{12bp}\selectfont\bfseries}
 \def\sectionfont{\mathversion{bold}\fontfamily{\rmdefault}\fontsize{12bp}{15bp}\color{BlueTextColor}\selectfont\bfseries}
 \def\subsectionfont{\mathversion{bold}\fontfamily{\rmdefault}\fontsize{10bp}{13bp}\selectfont\bfseries}
-\def\subsubsectionfont{\def\textit##1{{\fontfamily{FSMe-TLF}\fontseries{m}\fontshape{it}\selectfont##1}}\fontfamily{FSMe-TLF}\fontseries{md}\fontsize{10bp}{13bp}\selectfont}
-\def\paragraphfont{\def\textit##1{{\fontfamily{FSMe-TLF}\fontseries{m}\fontshape{it}\selectfont##1}}\fontfamily{FSMe-TLF}\fontseries{md}\itshape\fontsize{9bp}{12bp}\selectfont}
+\def\subsubsectionfont{\def\textit##1{{\fontfamily{FSMe-TLF}\fontseries{m}\fontshape{it}\selectfont##1}}\fontfamily{FSMe-TLF}\fontseries{m}\fontsize{10bp}{13bp}\selectfont}
+\def\paragraphfont{\def\textit##1{{\fontfamily{FSMe-TLF}\fontseries{m}\fontshape{it}\selectfont##1}}\fontfamily{FSMe-TLF}\fontseries{m}\itshape\fontsize{9bp}{12bp}\selectfont}
 \def\subparagraphfont{\mathversion{bold}\fontsize{9bp}{11bp}\selectfont\bfseries\itshape}
 
 \renewcommand\section{\needspace{0.15in}\@startsection {section}{1}{0\p@}%
