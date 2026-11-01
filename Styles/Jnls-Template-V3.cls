@@ -1821,12 +1821,13 @@
 
 
 
-\usepackage[LY1]{fontenc}
+%% [warning fix] set font defaults before fontenc selects a font (avoids LY1/cmr substitution)
 \renewcommand\rmdefault{FSMe-TLF}
 \renewcommand\sfdefault{FSMe-TLF}
 \renewcommand\seriesdefault{l}
 \renewcommand\mddefault{m}
 \renewcommand\bfdefault{b}
+\usepackage[LY1]{fontenc}
 
 \AtBeginDocument{
 \pdfmapfile{+FSMe.map}
