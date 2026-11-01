@@ -2563,7 +2563,12 @@ colback=BlueTextColor,colbacktitle=BlueTextColor,left skip=-16pt,left=-2pt,colfr
       \newpage%
       \global\@topnum\z@% Prevents figures from going at top of page.
       %\thispagestyle{empty}
-     \twocolumn[\begin{minipage}{350pt}\vbox to 355pt{{\@maketitle}%
+     %% [warning fix] The cover page used to be \twocolumn[...] with content deliberately taller
+     %% than \textheight ("Optional argument of \twocolumn too tall", "Text page 1 contains only
+     %% floats", 2x "Overfull \vbox"). Same box, same position, but set in a page-high \vbox whose
+     %% \vss absorbs the overhang; \hfuzz tolerates the intended bleeds (title box, logos).
+     \vbox to\textheight{\hsize\textwidth\@parboxrestore\col@number\@ne\normalcolor\hfuzz=25pt\relax
+     \begin{minipage}{350pt}\vbox to 355pt{{\@maketitle}%
 \par\addvspace{30.5pt}
   \noindent{\aueditorfont\@aueditor}%%
 \removelastskip
@@ -2628,7 +2633,7 @@ colback=BlueTextColor,colbacktitle=BlueTextColor,left skip=-16pt,left=-2pt,colfr
 \par\addvspace{7.5pt}
 \printkeywords\par\addvspace{9.5pt}
 \printartdetails\vfill
-\vspace*{32.4pt}}}\end{minipage}]\endgroup%
+\vspace*{32.4pt}}}\end{minipage}\par\vss}\endgroup\twocolumn%
   \setcounter{footnote}{0}%
   \global\let\thanks\relax%
   \global\let\@date\@empty%
