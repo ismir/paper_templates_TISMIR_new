@@ -2543,8 +2543,8 @@ colback=BlueTextColor,colbacktitle=BlueTextColor,left skip=-16pt,left=-2pt,colfr
 \def\theequation{\arabic{equation}}
 \setcounter{footnote}{0}%
 %\setcounter{endnote}{0}%
-\@definecounter{querynote}
-\@definecounter{MSquerynotedisplay}
+\@ifundefined{c@querynote}{\@definecounter{querynote}}{}% [warning fix]
+\@ifundefined{c@MSquerynotedisplay}{\@definecounter{MSquerynotedisplay}}{}%
 \setcounter{querynote}{0}%
 \setcounter{MSquerynotedisplay}{0}%
 %%
@@ -2681,8 +2681,8 @@ colback=BlueTextColor,colbacktitle=BlueTextColor,left skip=-16pt,left=-2pt,colfr
 \def\theequation{\arabic{equation}}
 \setcounter{footnote}{0}%
 %\setcounter{endnote}{0}%
-\@definecounter{querynote}
-\@definecounter{MSquerynotedisplay}
+\@ifundefined{c@querynote}{\@definecounter{querynote}}{}% [warning fix]
+\@ifundefined{c@MSquerynotedisplay}{\@definecounter{MSquerynotedisplay}}{}%
 \setcounter{querynote}{0}%
 \setcounter{MSquerynotedisplay}{0}%
 %%
