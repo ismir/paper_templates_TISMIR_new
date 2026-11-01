@@ -133,13 +133,14 @@
 \RequirePackage{wrapfig}%
 
 %% Hyperlinks update
+%% [warning fix] draft/bookmarks can only be set at load time
+\if@hyperrefon\PassOptionsToPackage{draft,bookmarks=false}{hyperref}\fi
 \usepackage{hyperref}%\endinput
 
 %\RequirePackage{breakurl}
 \if@hyperrefon
-    \hypersetup{draft,
+    \hypersetup{%
             linkcolor=black,
-            bookmarks=false,%
             bookmarksopen=false,%
     }%
 \else%
@@ -4378,9 +4379,8 @@ itemsep=0pt,itemindent=0pt,topsep=0bp,parsep=0pt,partopsep=0pt,rightmargin=0pt,l
 
 
 \AtBeginDocument{\if@hyperrefon
-    \hypersetup{draft,
+    \hypersetup{%
             linkcolor=black,
-            bookmarks=false,%
             bookmarksopen=false,%
     }%
 \else%
