@@ -125,6 +125,10 @@
 
 \RequirePackage{endnotes}
 \RequirePackage{lettrine}
+%% [warning fix] recent lettrine versions try to \input an empty options file ("File  loaded!")
+\expandafter\ifx\expandafter\relax\detokenize\expandafter{\DefaultOptionsFile}\relax
+  \let\DefaultOptionsFile\@empty
+\fi
 
 \RequirePackage{wrapfig}%
 
