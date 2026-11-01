@@ -2,6 +2,8 @@
 
 %% [warning fix] scalable Computer Modern sizes (math operators use OT1/cmr at bp sizes)
 \RequirePackage{fix-cm}
+%% [warning fix] the bundled logos are PDF 1.6/1.7; allow including them without warnings
+\ifdefined\pdfminorversion\pdfminorversion=7\fi
 
 %% Document if conditions
 \newif\if@cropmarkson \@cropmarksonfalse
